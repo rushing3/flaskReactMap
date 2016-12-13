@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Gmaps, Map, Marker, InfoWindow, Circle} from 'react-gmaps';
+import {Gmaps, Marker, InfoWindow, Circle} from '../src/index';
 import MapEvents from '../components/map';
+import mapStyle from './mapStyle';
 
 const coords = {
     lat: 51.5258541,
@@ -17,6 +18,7 @@ const styles = {
               float: 'left'
             },
       flex: {
+              backgroundColor: 'gray',
               display: 'flex'
             }
 };
@@ -58,28 +60,29 @@ const App = React.createClass({
                     loadingMessage={'Map loading...'}                                     
                     params={{v: '3.exp', key: 'AIzaSyDnGm7uncUevD9dv_m1QGhQ1GbAXyttC8Q'}}
                     onMapCreated={this.onMapCreated}
+                    styles={mapStyle}
                     {...handlers}>
                     <Marker
                         lat={coords.lat}
-                        lng={coords.lng}
-                        draggable={true}
-                        onDragEnd={this.onDragEnd} />
-                    <InfoWindow
+                    lng={coords.lng}
+                    draggable={true}
+                    onDragEnd={this.onDragEnd} />
+                        <InfoWindow
                         lat={coords.lat}
-                        lng={coords.lng}
-                        content={'Hello, world'}
-                        onCloseClick={this.onCloseClick} />
-                    <Circle
+                    lng={coords.lng}
+                    content={'Hello, world'}
+                    onCloseClick={this.onCloseClick} />
+                        <Circle
                         lat={coords.lat}
-                        lng={coords.lng}
-                        radius={500}
-                        onClick={this.onClick} />
-                </Gmaps>
-                <ul style={styles.left}>
-                    {events}
-                </ul>
-            </div>
-        );
+                    lng={coords.lng}
+                    radius={500}
+                    onClick={this.onClick} />
+                        </Gmaps>
+                        <ul style={styles.left}>
+                        {events}
+                    </ul>
+                        </div>
+                        );
     }
 });
 
