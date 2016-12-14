@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Gmaps, Marker, InfoWindow, Circle} from '../src/index';
-import MapEvents from '../components/map';
+import MapEvents from '../src/components/map';
 import mapStyle from './mapStyle';
 
 const coords = {
@@ -11,7 +11,7 @@ const coords = {
 
 const styles = {
       item: {
-              backgroundColor: 'white',
+              backgroundColor: 'gray',
               transition: 'background-color 0.2s linear'
             },
       left: {
@@ -29,7 +29,7 @@ const App = React.createClass({
         const item = ReactDOM.findDOMNode(this.refs[_event]);
         item.style.backgroundColor = '#99ccff';
         setTimeout(function() {
-            item.style.backgroundColor = 'white';
+            item.style.backgroundColor = 'gray';
         }, 500);
     },
 
@@ -51,8 +51,8 @@ const App = React.createClass({
         return (
             <div className="well" style={styles.flex}>
                 <Gmaps
-                    width={'50%'}
-                    height={'500px'}
+                    width={'75%'}
+                    height={'600px'}
                     lat={coords.lat}
                     lng={coords.lng}
                     float={'left'}
@@ -61,28 +61,29 @@ const App = React.createClass({
                     params={{v: '3.exp', key: 'AIzaSyDnGm7uncUevD9dv_m1QGhQ1GbAXyttC8Q'}}
                     onMapCreated={this.onMapCreated}
                     styles={mapStyle}
+                    disableDefaultUI={'true'}
                     {...handlers}>
                     <Marker
                         lat={coords.lat}
-                    lng={coords.lng}
-                    draggable={true}
-                    onDragEnd={this.onDragEnd} />
-                        <InfoWindow
+                        lng={coords.lng}
+                        draggable={true}
+                        onDragEnd={this.onDragEnd} />
+                    <InfoWindow
                         lat={coords.lat}
-                    lng={coords.lng}
-                    content={'Hello, world'}
-                    onCloseClick={this.onCloseClick} />
-                        <Circle
+                        lng={coords.lng}
+                        content={'Hello, world'}
+                        onCloseClick={this.onCloseClick} />
+                    <Circle
                         lat={coords.lat}
-                    lng={coords.lng}
-                    radius={500}
-                    onClick={this.onClick} />
-                        </Gmaps>
-                        <ul style={styles.left}>
-                        {events}
-                    </ul>
-                        </div>
-                        );
+                        lng={coords.lng}
+                        radius={500}
+                        onClick={this.onClick} />
+                </Gmaps>
+                <ul style={styles.left}>
+                    {events}
+                </ul>
+            </div>
+        );
     }
 });
 
