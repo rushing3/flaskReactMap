@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Gmaps, Marker, InfoWindow, Circle} from '../src/index';
-import MapEvents from '../src/components/map';
+import MapEvents from '../src/events/map';
 import mapStyle from './mapStyle';
+import visitedCoords from './visitedCoords';
 
 const coords = {
     lat: 51.5258541,
@@ -48,6 +49,45 @@ const App = React.createClass({
             }
         }
 
+        const visitedMarkers = [];
+        //var geocoder = new google.maps.Geocoder();
+        //geocoder.geocode({address: 'Brooklyn, New York, USA'}, function(results, status) {
+        //    if (status == 'OK') {
+        //        var latCoord = results[0].geometry.location.lat();
+        //        var lngCoord = results[0].geometry.location.lng();
+        //        visitedMarkers.push(
+        //            <Marker
+        //                key={i}
+        //                lat={latCoord}
+        //                lng={lngCoord}
+        //                icon={{
+        //                    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+        //                    scale: 3,
+        //                    strokeColor: 'brown',
+        //                    strokeOpacity: 0.7
+        //                }}
+        //                draggable={false}
+        //            />
+        //        )
+        //    }
+        //});
+        for (var i = 0; i < visitedCoords.length; i++) {
+            visitedMarkers.push(
+                <Marker
+                    key={i}
+                    lat={visitedCoords[i].lat}
+                    lng={visitedCoords[i].lng}
+                    icon={{
+                        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                        scale: 3,
+                        strokeColor: 'brown',
+                        strokeOpacity: 0.7
+                    }}
+                    draggable={false}
+                />
+            );
+        }
+
         return (
             <div className="well" style={styles.flex}>
                 <Gmaps
@@ -62,17 +102,8 @@ const App = React.createClass({
                     onMapCreated={this.onMapCreated}
                     styles={mapStyle}
                     disableDefaultUI={'true'}
-                    {...handlers}>
-                    <Marker
-                        lat={coords.lat}
-                        lng={coords.lng}
-                        draggable={true}
-                        onDragEnd={this.onDragEnd} />
-                    <InfoWindow
-                        lat={coords.lat}
-                        lng={coords.lng}
-                        content={'Hello, world'}
-                        onCloseClick={this.onCloseClick} />
+                >
+                    {visitedMarkers}
                     <Circle
                         lat={coords.lat}
                         lng={coords.lng}
